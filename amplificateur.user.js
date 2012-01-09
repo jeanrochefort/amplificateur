@@ -10,7 +10,14 @@
 // @author		Anon
 // @license		Tu apprécies ? Paye-moi une bière à une DLVV.
 // ==/UserScript==
-// Soupe Anon ?
+
+/*
+ * Amelioration 0 : prefixe l'URL par www
+ */
+if(window.location.host[0] !== 'w') {
+    window.location.host = 'www.' + window.location.host;
+}
+
 
 addEventListener('load', function (e) {
 
@@ -100,23 +107,5 @@ function traduire(id, notify) {
             p.translated = undefined
         }
 };
-
-
-
-
-/*
- * Second amelioration : repare les dommages causes par l'absence de www dans l'adresse
- */
-//Changer ku_boardspath pour régler le problème d'expansion des fils en l'absence de www
-//De plus, il y a un probleme similaire dans le chemin du fichier des traductions
-//Enfin, la variable gettext a déjà été initialisée à ce moment -> il faut la réinitialiser
-var script = document.createElement("script");
-script.type = "text/javascript";
-script.textContent = "ku_boardspath = 'http://' + window.location.host; " +
-"var trad = document.getElementsByTagName('link')[1]; " +
-"trad.href = ku_boardspath + trad.href.substring(26); " +
-"gt = new Gettext({ 'domain' : 'kusaba' });";
-
-document.getElementsByTagName('head')[0].appendChild(script);
 
 }, false);
